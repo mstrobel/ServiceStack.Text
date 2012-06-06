@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class AnonymousTypes

@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal static class DeserializeSpecializedCollections<T, TSerializer>
 		where TSerializer : ITypeSerializer

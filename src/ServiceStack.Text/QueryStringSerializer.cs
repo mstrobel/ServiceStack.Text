@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -17,10 +17,10 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Jsv;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public static class QueryStringSerializer
 	{
@@ -114,7 +114,7 @@ namespace ServiceStack.Text
 					}
 				}
 
-				CacheFn = QueryStringSerializer.Instance.GetWriteFn<T>();
+                CacheFn = (writer, o) => QueryStringSerializer.Instance.GetWriteFn<T>()(writer, (T)o);
 			}
 		}
 

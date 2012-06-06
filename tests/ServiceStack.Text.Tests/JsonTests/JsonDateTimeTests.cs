@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using ServiceStack.Client;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	public class JsonDateTimeTests
 	{
@@ -343,10 +343,10 @@ namespace ServiceStack.Text.Tests.JsonTests
             var dateTimeOffset = new DateTimeOffset(1997, 11, 24, 12, 34, 56, TimeSpan.FromHours(-10));
 
             JsConfig.DateHandler = JsonDateHandler.TimestampOffset;
-            var json = ServiceStack.Text.Common.DateTimeSerializer.ToWcfJsonDateTimeOffset(dateTimeOffset);
+            var json = StrobelStack.Text.Common.DateTimeSerializer.ToWcfJsonDateTimeOffset(dateTimeOffset);
 
             JsConfig.DateHandler = JsonDateHandler.ISO8601;
-            var fromJson = ServiceStack.Text.Common.DateTimeSerializer.ParseDateTimeOffset(json);
+            var fromJson = StrobelStack.Text.Common.DateTimeSerializer.ParseDateTimeOffset(json);
 
             Assert.That(fromJson, Is.EqualTo(dateTimeOffset));
             JsConfig.Reset();
@@ -358,10 +358,10 @@ namespace ServiceStack.Text.Tests.JsonTests
             var dateTimeOffset = new DateTimeOffset(1994, 11, 24, 12, 34, 56, TimeSpan.FromHours(-10));
 
             JsConfig.DateHandler = JsonDateHandler.ISO8601;
-            var json = ServiceStack.Text.Common.DateTimeSerializer.ToWcfJsonDateTimeOffset(dateTimeOffset);
+            var json = StrobelStack.Text.Common.DateTimeSerializer.ToWcfJsonDateTimeOffset(dateTimeOffset);
 
             JsConfig.DateHandler = JsonDateHandler.DCJSCompatible;
-            var fromJson = ServiceStack.Text.Common.DateTimeSerializer.ParseDateTimeOffset(json);
+            var fromJson = StrobelStack.Text.Common.DateTimeSerializer.ParseDateTimeOffset(json);
 
             // NOTE: DJCS goes to local, so botches offset
             Assert.That(fromJson, Is.EqualTo(dateTimeOffset));
@@ -373,7 +373,7 @@ namespace ServiceStack.Text.Tests.JsonTests
         {
             const string json = (string)null;
             var expected = default(DateTimeOffset);
-            var fromJson = ServiceStack.Text.Common.DateTimeSerializer.ParseDateTimeOffset(json);
+            var fromJson = StrobelStack.Text.Common.DateTimeSerializer.ParseDateTimeOffset(json);
             Assert.That(fromJson, Is.EqualTo(expected));
         }
 

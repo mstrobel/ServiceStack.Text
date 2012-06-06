@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -13,48 +13,93 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text.Jsv
+namespace StrobelStack.Text.Jsv
 {
 	internal static class JsvWriter
 	{
 		public static readonly JsWriter<JsvTypeSerializer> Instance = new JsWriter<JsvTypeSerializer>();
 
-        private static Dictionary<Type, WriteObjectDelegate> WriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
+        private static Dictionary<Type, WriteObjectDelegate> OldWriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
+        private static Dictionary<Type, Delegate> WriteFnCache = new Dictionary<Type, Delegate>();
 
-		public static WriteObjectDelegate GetWriteFn(Type type)
-		{
-			try
-			{
+        public static WriteObjectDelegate GetWriteFn(Type type)
+        {
+            try
+            {
                 WriteObjectDelegate writeFn;
-                if (WriteFnCache.TryGetValue(type, out writeFn)) return writeFn;
+                if (OldWriteFnCache.TryGetValue(type, out writeFn)) return writeFn;
+
+                var writerParameter = Expression.Parameter(typeof(TextWriter), "writer");
+                var valueParameter = Expression.Parameter(typeof(object), "value");
+
+                var wrapper = Expression.Lambda<WriteObjectDelegate>(
+                    Expression.Invoke(
+                        Expression.Call(typeof(JsvWriter), "GetWriteFn", new[] { type }),
+                        writerParameter,
+                        type == typeof(object) ? (Expression)valueParameter : Expression.Convert(valueParameter, type)),
+                    writerParameter,
+                    valueParameter);
+
+                var compiledWrapper = wrapper.Compile();
+
+                Dictionary<Type, WriteObjectDelegate> snapshot, newCache;
+
+                do
+                {
+                    snapshot = OldWriteFnCache;
+                    newCache = new Dictionary<Type, WriteObjectDelegate>(snapshot);
+                    newCache[type] = compiledWrapper;
+                }
+                while (!ReferenceEquals(Interlocked.CompareExchange(ref OldWriteFnCache, newCache, snapshot), snapshot) &&
+                       !OldWriteFnCache.TryGetValue(type, out writeFn));
+
+                return writeFn ?? compiledWrapper;
+            }
+            catch (Exception ex)
+            {
+                Tracer.Instance.WriteError(ex);
+                throw;
+            }
+
+        }
+
+        public static WriteValueDelegate<T> GetWriteFn<T>()
+        {
+            try
+            {
+                var type = typeof(T);
+
+                Delegate writeFn;
+                if (WriteFnCache.TryGetValue(type, out writeFn)) return (WriteValueDelegate<T>)writeFn;
 
                 var genericType = typeof(JsvWriter<>).MakeGenericType(type);
                 var mi = genericType.GetMethod("WriteFn", BindingFlags.Public | BindingFlags.Static);
-                var writeFactoryFn = (Func<WriteObjectDelegate>)Delegate.CreateDelegate(typeof(Func<WriteObjectDelegate>), mi);
+                var writeFactoryFn = (Func<WriteValueDelegate<T>>)Delegate.CreateDelegate(typeof(Func<WriteValueDelegate<T>>), mi);
                 writeFn = writeFactoryFn();
 
-                Dictionary<Type, WriteObjectDelegate> snapshot, newCache;
+                Dictionary<Type, Delegate> snapshot, newCache;
                 do
                 {
                     snapshot = WriteFnCache;
-                    newCache = new Dictionary<Type, WriteObjectDelegate>(WriteFnCache);
+                    newCache = new Dictionary<Type, Delegate>(WriteFnCache);
                     newCache[type] = writeFn;
 
                 } while (!ReferenceEquals(
                     Interlocked.CompareExchange(ref WriteFnCache, newCache, snapshot), snapshot));
 
-                return writeFn;
-			}
-			catch (Exception ex)
-			{
-				Tracer.Instance.WriteError(ex);
-				throw;
-			}
-		}
+                return (WriteValueDelegate<T>)writeFn;
+            }
+            catch (Exception ex)
+            {
+                Tracer.Instance.WriteError(ex);
+                throw;
+            }
+        }
 
 		public static void WriteLateBoundObject(TextWriter writer, object value)
 		{
@@ -79,24 +124,23 @@ namespace ServiceStack.Text.Jsv
 	/// <typeparam name="T"></typeparam>
 	internal static class JsvWriter<T>
 	{
-		private static readonly WriteObjectDelegate CacheFn;
+        private static readonly WriteValueDelegate<T> CacheFn;
 
-		public static WriteObjectDelegate WriteFn()
+        public static WriteValueDelegate<T> WriteFn()
 		{
-			return CacheFn ?? WriteObject;
+            return (writer, obj) => CacheFn(writer, obj);
 		}
 
 		static JsvWriter()
 		{
-		    CacheFn = typeof(T) == typeof(object) 
-                ? JsvWriter.WriteLateBoundObject 
+            CacheFn = typeof(T) == typeof(object)
+                ? ((writer, obj) => JsvWriter.WriteLateBoundObject(writer, obj)) 
                 : JsvWriter.Instance.GetWriteFn<T>();
-		}
+        }
 
 	    public static void WriteObject(TextWriter writer, object value)
 		{
-			CacheFn(writer, value);
+			CacheFn(writer, (T)value);
 		}
-
 	}
 }

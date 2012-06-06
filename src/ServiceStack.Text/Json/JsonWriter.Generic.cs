@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -13,48 +13,95 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text.Json
+using System.Linq;
+
+namespace StrobelStack.Text.Json
 {
 	internal static class JsonWriter
 	{
 		public static readonly JsWriter<JsonTypeSerializer> Instance = new JsWriter<JsonTypeSerializer>();
 
-		private static Dictionary<Type, WriteObjectDelegate> WriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
+        private static Dictionary<Type, WriteObjectDelegate> OldWriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
+        private static Dictionary<Type, Delegate> WriteFnCache = new Dictionary<Type, Delegate>();
 
 		public static WriteObjectDelegate GetWriteFn(Type type)
 		{
-			try
-			{
-				WriteObjectDelegate writeFn;
-				if (WriteFnCache.TryGetValue(type, out writeFn)) return writeFn;
+            try
+            {
+                WriteObjectDelegate writeFn;
+                if (OldWriteFnCache.TryGetValue(type, out writeFn)) return writeFn;
 
-				var genericType = typeof(JsonWriter<>).MakeGenericType(type);
-				var mi = genericType.GetMethod("WriteFn", BindingFlags.Public | BindingFlags.Static);
-				var writeFactoryFn = (Func<WriteObjectDelegate>)Delegate.CreateDelegate(typeof(Func<WriteObjectDelegate>), mi);
-				writeFn = writeFactoryFn();
+                var writerParameter = Expression.Parameter(typeof(TextWriter), "writer");
+                var valueParameter = Expression.Parameter(typeof(object), "value");
 
-				Dictionary<Type, WriteObjectDelegate> snapshot, newCache;
-				do
-				{
-					snapshot = WriteFnCache;
-					newCache = new Dictionary<Type, WriteObjectDelegate>(WriteFnCache);
-					newCache[type] = writeFn;
+                var wrapper = Expression.Lambda<WriteObjectDelegate>(
+                    Expression.Invoke(
+                        Expression.Call(typeof(JsonWriter), "GetWriteFn", new[] { type }),
+                        writerParameter,
+                        type == typeof(object) ? (Expression)valueParameter : Expression.Convert(valueParameter, type)),
+                    writerParameter,
+                    valueParameter);
 
-				} while (!ReferenceEquals(
-					Interlocked.CompareExchange(ref WriteFnCache, newCache, snapshot), snapshot));
+                var compiledWrapper = wrapper.Compile();
 
-				return writeFn;
-			}
-			catch (Exception ex)
-			{
-				Tracer.Instance.WriteError(ex);
-				throw;
-			}
+                Dictionary<Type, WriteObjectDelegate> snapshot, newCache;
+
+                do
+                {
+                    snapshot = OldWriteFnCache;
+                    newCache = new Dictionary<Type, WriteObjectDelegate>(snapshot);
+                    newCache[type] = compiledWrapper;
+                }
+                while (!ReferenceEquals(Interlocked.CompareExchange(ref OldWriteFnCache, newCache, snapshot), snapshot) &&
+                       !OldWriteFnCache.TryGetValue(type, out writeFn));
+
+                return writeFn ?? compiledWrapper;
+            }
+            catch (Exception ex)
+            {
+                Tracer.Instance.WriteError(ex);
+                throw;
+            }
+
 		}
+
+		public static WriteValueDelegate<T> GetWriteFn<T>()
+		{
+            try
+            {
+                var type = typeof(T);
+
+                Delegate writeFn;
+                if (WriteFnCache.TryGetValue(type, out writeFn)) return (WriteValueDelegate<T>)writeFn;
+
+                var genericType = typeof(JsonWriter<>).MakeGenericType(type);
+                var mi = genericType.GetMethod("WriteFn", BindingFlags.Public | BindingFlags.Static);
+                var writeFactoryFn = (Func<WriteValueDelegate<T>>)Delegate.CreateDelegate(typeof(Func<WriteValueDelegate<T>>), mi);
+                writeFn = writeFactoryFn();
+
+                Dictionary<Type, Delegate> snapshot, newCache;
+                do
+                {
+                    snapshot = WriteFnCache;
+                    newCache = new Dictionary<Type, Delegate>(WriteFnCache);
+                    newCache[type] = writeFn;
+
+                } while (!ReferenceEquals(
+                    Interlocked.CompareExchange(ref WriteFnCache, newCache, snapshot), snapshot));
+
+                return (WriteValueDelegate<T>)writeFn;
+            }
+            catch (Exception ex)
+            {
+                Tracer.Instance.WriteError(ex);
+                throw;
+            }
+        }
 
 		private static Dictionary<Type, TypeInfo> JsonTypeInfoCache = new Dictionary<Type, TypeInfo>();
 
@@ -125,11 +172,11 @@ namespace ServiceStack.Text.Json
 	internal static class JsonWriter<T>
 	{
 		internal static TypeInfo TypeInfo;
-		private static readonly WriteObjectDelegate CacheFn;
+        private static readonly WriteValueDelegate<T> CacheFn;
 
-		public static WriteObjectDelegate WriteFn()
+        public static WriteValueDelegate<T> WriteFn()
 		{
-			return CacheFn ?? WriteObject;
+			return CacheFn ?? ((writer, obj) => WriteObject(writer, obj));
 		}
 
 		public static TypeInfo GetTypeInfo()
@@ -137,21 +184,34 @@ namespace ServiceStack.Text.Json
 			return TypeInfo;
 		}
 
-		static JsonWriter()
-		{
-			TypeInfo = new TypeInfo {
-				EncodeMapKey = typeof(T) == typeof(bool) || typeof(T).IsNumericType()
-			};
+        static JsonWriter()
+        {
+            TypeInfo = new TypeInfo
+                       {
+                           EncodeMapKey = typeof(T) == typeof(bool) || typeof(T).IsNumericType()
+                       };
 
-            CacheFn = typeof(T) == typeof(object) 
-                ? JsonWriter.WriteLateBoundObject 
-                : JsonWriter.Instance.GetWriteFn<T>();
-		}
+            var wasJson = JsState.IsJson;
+
+            JsState.IsJson = true;
+
+            try
+            {
+                CacheFn = typeof(T) == typeof(object)
+                              ? ((writer, obj) => JsonWriter.WriteLateBoundObject(writer, obj))
+                              : JsonWriter.Instance.GetWriteFn<T>();
+            }
+            finally
+            {
+                JsState.IsJson = wasJson;
+            }
+        }
 
 	    public static void WriteObject(TextWriter writer, object value)
-		{
-			CacheFn(writer, value);
-		}
+	    {
+	        WriteValueDelegate<T> writeValueDelegate = CacheFn;
+	        writeValueDelegate(writer, (T)value);
+	    }
 	}
 
 }

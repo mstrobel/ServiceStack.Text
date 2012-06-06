@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	[TestFixture]
 	public class AnonymousDeserializationTests

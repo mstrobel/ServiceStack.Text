@@ -1,6 +1,6 @@
 using System;
 
-namespace ServiceStack.Text.Tests.DynamicModels.DataModel
+namespace StrobelStack.Text.Tests.DynamicModels.DataModel
 {
 	public class StrictType
 	{

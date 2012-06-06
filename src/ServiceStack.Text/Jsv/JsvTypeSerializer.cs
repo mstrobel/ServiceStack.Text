@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -11,12 +11,15 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Json;
+using System.Threading;
 
-namespace ServiceStack.Text.Jsv
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Json;
+
+namespace StrobelStack.Text.Jsv
 {
 	internal class JsvTypeSerializer
 		: ITypeSerializer
@@ -25,9 +28,9 @@ namespace ServiceStack.Text.Jsv
 
 		public string TypeAttrInObject { get { return "{__type:"; } }
 
-		public WriteObjectDelegate GetWriteFn<T>()
+        public WriteValueDelegate<T> GetWriteFn<T>()
 		{
-			return JsvWriter<T>.WriteFn();
+            return (writer, obj) => JsvWriter.GetWriteFn(typeof(T))(writer, obj);
 		}
 
 		public WriteObjectDelegate GetWriteFn(Type type)
@@ -52,7 +55,7 @@ namespace ServiceStack.Text.Jsv
 			writer.Write(value);
 		}
 
-		public void WriteBuiltIn(TextWriter writer, object value)
+		public void WriteBuiltIn<T>(TextWriter writer, T value)
 		{
 			writer.Write(value);
 		}
@@ -149,10 +152,10 @@ namespace ServiceStack.Text.Jsv
 			writer.Write((ushort)intValue);
 		}
 
-		public void WriteInt32(TextWriter writer, object intValue)
+		public void WriteInt32(TextWriter writer, int? intValue)
 		{
-			if (intValue == null) return;
-			writer.Write((int)intValue);
+            if (intValue.HasValue)
+                writer.Write(intValue.Value);
 		}
 
 		public void WriteUInt32(TextWriter writer, object uintValue)
@@ -417,5 +420,44 @@ namespace ServiceStack.Text.Jsv
 
 			return value.Substring(tokenStartPos, i - tokenStartPos);
 		}
+
+        public void WriteTypeInfo(TextWriter writer, object value)
+        {
+            writer.Write(TypeInfoCache.GetTypeName(value.GetType()));
+        }
+
+        private static class TypeInfoCache
+        {
+            private static Dictionary<Type, String> _cache = new Dictionary<Type, string>();
+
+            internal static string GetTypeName(Type type)
+            {
+                string name;
+
+                if (_cache.TryGetValue(type, out name))
+                    return name;
+
+                name = ConstructTypeInfoString(type);
+
+                Dictionary<Type, String> oldCache, newCache;
+
+                do
+                {
+                    oldCache = _cache;
+                    newCache = new Dictionary<Type, string>(oldCache);
+                    newCache[type] = name;
+
+                } while (!ReferenceEquals(Interlocked.CompareExchange(ref _cache, newCache, oldCache), oldCache));
+
+                return name;
+            }
+
+            private static string ConstructTypeInfoString(Type type)
+            {
+                return JsWriter.TypeAttr.ToCsvField() +
+                       JsWriter.MapKeySeperator +
+                       type.ToTypeString().ToCsvField();
+            }
+        }
 	}
 }

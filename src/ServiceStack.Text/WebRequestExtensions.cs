@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
     public static class WebRequestExtensions
     {

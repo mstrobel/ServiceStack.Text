@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Jsv;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	/// <summary>
 	/// Creates an instance of a Type from a string value

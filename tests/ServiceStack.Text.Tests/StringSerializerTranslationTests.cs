@@ -7,9 +7,9 @@ using Northwind.Common.DataModel;
 using Northwind.Common.ServiceModel;
 using NUnit.Framework;
 using ServiceStack.Common.Tests.Models;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class StringSerializerTranslationTests

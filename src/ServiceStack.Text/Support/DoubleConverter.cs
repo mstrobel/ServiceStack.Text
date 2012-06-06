@@ -1,4 +1,4 @@
-﻿namespace ServiceStack.Text.Support
+﻿namespace StrobelStack.Text.Support
 {
 	using System;
 	using System.Globalization;

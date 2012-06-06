@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using ServiceStack.Text.Tests.DynamicModels;
+using StrobelStack.Text.Tests.DynamicModels;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	[TestFixture]
 	public class ModelWithAllTypesTests

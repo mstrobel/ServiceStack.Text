@@ -7,9 +7,9 @@ using ServiceStack.Messaging;
 using ServiceStack.ServiceHost;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.ServiceInterface.ServiceModel;
-using ServiceStack.Text.Tests.JsonTests;
+using StrobelStack.Text.Tests.JsonTests;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class InterfaceTests : TestBase
@@ -81,10 +81,10 @@ namespace ServiceStack.Text.Tests
 					"ServiceStack.Messaging.Message`1[[System.String, mscorlib]], ServiceStack.Interfaces");
 
 				yield return new TestCaseData(typeof(Cat),
-					"ServiceStack.Text.Tests.JsonTests.Cat, ServiceStack.Text.Tests");
+					"StrobelStack.Text.Tests.JsonTests.Cat, StrobelStack.Text.Tests");
 
 				yield return new TestCaseData(typeof(Zoo),
-					"ServiceStack.Text.Tests.JsonTests.Zoo, ServiceStack.Text.Tests");
+					"StrobelStack.Text.Tests.JsonTests.Zoo, StrobelStack.Text.Tests");
 			}
 		}
 

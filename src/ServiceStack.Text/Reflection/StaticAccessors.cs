@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -15,7 +15,7 @@ using System.Reflection;
 #if !XBOX
 using System.Linq.Expressions;
 #endif
-namespace ServiceStack.Text.Reflection
+namespace StrobelStack.Text.Reflection
 {
     public static class StaticAccessors
     {

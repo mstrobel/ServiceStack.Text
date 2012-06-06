@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ServiceStack.Text.Json;
+using StrobelStack.Text.Json;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal static class DeserializeTypeRefJson
 	{

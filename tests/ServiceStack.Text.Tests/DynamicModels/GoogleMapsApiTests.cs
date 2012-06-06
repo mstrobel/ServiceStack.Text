@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests.DynamicModels
+namespace StrobelStack.Text.Tests.DynamicModels
 {
     public class GoogleMapsApiTests
     {

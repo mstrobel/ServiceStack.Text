@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Northwind.Common.DataModel;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class StringSerializerNorthwindDatabaseTests

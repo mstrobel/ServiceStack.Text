@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -16,12 +16,12 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading;
-using ServiceStack.Text.Support;
+using StrobelStack.Text.Support;
 #if WINDOWS_PHONE
 using System.Linq.Expressions;
 #endif
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
     public delegate object EmptyCtorDelegate();
 

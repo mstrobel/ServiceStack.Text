@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal class JsReader<TSerializer>
 		where TSerializer : ITypeSerializer

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using ServiceStack.Messaging;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	public class Incr
 	{

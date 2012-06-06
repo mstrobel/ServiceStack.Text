@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Jsv;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal static class DeserializeTypeRefJsv
 	{

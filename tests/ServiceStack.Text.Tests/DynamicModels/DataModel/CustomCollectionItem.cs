@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ServiceStack.Text.Tests.DynamicModels.DataModel
+namespace StrobelStack.Text.Tests.DynamicModels.DataModel
 {
 	[Serializable]
 	public class CustomCollectionItem

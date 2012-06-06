@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace ServiceStack.Text.Tests.DynamicModels.DataModel
+namespace StrobelStack.Text.Tests.DynamicModels.DataModel
 {
 	public class CustomCollectionDto
 	{

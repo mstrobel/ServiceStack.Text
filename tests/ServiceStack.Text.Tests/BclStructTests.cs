@@ -3,7 +3,7 @@ using System.Drawing;
 using NUnit.Framework;
 using ServiceStack.Common;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	public class BclStructTests : TestBase
 	{

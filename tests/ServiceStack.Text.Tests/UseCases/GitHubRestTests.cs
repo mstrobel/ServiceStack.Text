@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using ServiceStack.Common.Extensions;
 
-namespace ServiceStack.Text.Tests.UseCases
+namespace StrobelStack.Text.Tests.UseCases
 {
 	[TestFixture]
 	public class GitHubRestTests

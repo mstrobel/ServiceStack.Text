@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Reflection;
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Reflection;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	internal class CsvWriter<T>
 	{

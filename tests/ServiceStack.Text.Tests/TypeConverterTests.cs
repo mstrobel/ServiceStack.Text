@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Security.Policy;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class TypeConverterTests

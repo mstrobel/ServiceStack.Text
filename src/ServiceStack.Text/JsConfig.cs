@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Json;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Json;
+using StrobelStack.Text.Jsv;
 #if WINDOWS_PHONE
-using ServiceStack.Text.WP;
+using StrobelStack.Text.WP;
 #endif
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public static class
 		JsConfig
@@ -243,14 +243,12 @@ namespace ServiceStack.Text
     internal class JsonAotConfig
     {
         static JsReader<JsonTypeSerializer> reader;
-        static JsWriter<JsonTypeSerializer> writer;
         static JsonTypeSerializer serializer;
 
         static JsonAotConfig()
         {
             serializer = new JsonTypeSerializer();
             reader = new JsReader<JsonTypeSerializer>();
-            writer = new JsWriter<JsonTypeSerializer>();
         }
 
         public static ParseStringDelegate GetParseFn(Type type)
@@ -305,7 +303,6 @@ namespace ServiceStack.Text
             QueryStringWriter<T>.WriteObject(null, null);
         }
 
-        // Edited to fix issues with null List<Guid> properties in response objects
         public static void RegisterElement<T, TElement>()
         {
             RegisterBuiltin<TElement>();
@@ -315,22 +312,13 @@ namespace ServiceStack.Text
             ToStringDictionaryMethods<T, TElement, JsonTypeSerializer>.WriteIDictionary(null, null, null, null);
             ToStringDictionaryMethods<TElement, T, JsonTypeSerializer>.WriteIDictionary(null, null, null, null);
 
-            // Include List deserialisations from the Register<> method above.  This solves issue where List<Guid> properties on responses deserialise to null.
-            // No idea why this is happening because there is no visible exception raised.  Suspect MonoTouch is swallowing an AOT exception somewhere.
-            DeserializeArrayWithElements<TElement, JsonTypeSerializer>.ParseGenericArray(null, null);
-            DeserializeListWithElements<TElement, JsonTypeSerializer>.ParseGenericList(null, null, null);
-
-            // Cannot use the line below for some unknown reason - when trying to compile to run on device, mtouch bombs during native code compile.
-            // Something about this line or its inner workings is offensive to mtouch. Luckily this was not needed for my List<Guide> issue.
-            // DeserializeCollection<JsonTypeSerializer>.ParseCollection<TElement>(null, null, null);
-
             TranslateListWithElements<TElement>.LateBoundTranslateToGenericICollection(null, typeof(List<TElement>));
             TranslateListWithConvertibleElements<TElement, TElement>.LateBoundTranslateToGenericICollection(null, typeof(List<TElement>));
         }
     }
 #endif
 
-    public class JsConfig<T> //where T : struct
+	public class JsConfig<T> //where T : struct
 	{
 		/// <summary>
 		/// Never emit type info for this type

@@ -1,1 +1,1 @@
-nuget pack ..\NuGet\servicestack.text.nuspec
+nuget pack ..\NuGet\StrobelStack.Text.nuspec

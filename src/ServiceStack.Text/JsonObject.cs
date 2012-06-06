@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public static class JsonExtensions
 	{

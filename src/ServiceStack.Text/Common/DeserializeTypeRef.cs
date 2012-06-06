@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal static class DeserializeTypeRef
 	{

@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //	 Peter Townsend (townsend.pete@gmail.com)
@@ -14,9 +14,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public static class JsvFormatter
 	{

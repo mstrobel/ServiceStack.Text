@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	public abstract class TestBase
 	{
@@ -14,6 +14,12 @@ namespace ServiceStack.Text.Tests
 			//System.Threading.Thread.CurrentThread.CurrentCulture =
 			//    System.Globalization.CultureInfo.GetCultureInfo("sv-SE");
 		}
+
+        [TearDown]
+        public void ResetConfig()
+        {
+            JsConfig.Reset();
+        }
 
 		public virtual void Log(string message, params object[] args)
 		{

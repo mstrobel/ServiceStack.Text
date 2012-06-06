@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using ServiceStack.Common.Tests.Models;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class GenericCollectionTests

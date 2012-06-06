@@ -5,7 +5,7 @@ using NUnit.Framework;
 using ServiceStack.Common.Extensions;
 using ServiceStack.Common.Tests.Models;
 
-namespace ServiceStack.Text.Tests.JsvTests
+namespace StrobelStack.Text.Tests.JsvTests
 {
 	[TestFixture]
 	public class TypeSerializerToStringDictionaryTests

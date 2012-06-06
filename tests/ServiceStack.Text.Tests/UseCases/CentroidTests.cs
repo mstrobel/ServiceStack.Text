@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests.UseCases
+namespace StrobelStack.Text.Tests.UseCases
 {
 	/// <summary>
 	/// Solution in response to:

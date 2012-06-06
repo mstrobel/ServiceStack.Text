@@ -8,9 +8,9 @@
     <ProjectGuid>{579B3FDB-CDAD-44E1-8417-885C38E49A0E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServiceStack.Text</RootNamespace>
-    <AssemblyName>ServiceStack.Text</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RootNamespace>StrobelStack.Text</RootNamespace>
+    <AssemblyName>StrobelStack.Text</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -31,6 +31,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +51,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\ServiceStack.Text.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\StrobelStack.Text.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MonoTouch|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -132,9 +134,11 @@
     <Compile Include="Common\ParseUtils.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\SerializationExpressions.cs" />
     <Compile Include="Common\StaticParseMethod.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\TypeWriterMethods.cs" />
     <Compile Include="Common\WriteDictionary.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -242,6 +246,7 @@
     <Compile Include="Reflection\StaticAccessors.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Reflection\TypeExtensions.cs" />
     <Compile Include="StreamExtensions.cs">
       <SubType>Code</SubType>
     </Compile>

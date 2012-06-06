@@ -1,4 +1,4 @@
-namespace ServiceStack.Text.Tests.Support
+namespace StrobelStack.Text.Tests.Support
 {
 	public class TableItem
 	{

@@ -1,8 +1,8 @@
 using System;
 using System.Reflection;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text.Jsv
+namespace StrobelStack.Text.Jsv
 {
 	public static class JsvDeserializeType
 	{

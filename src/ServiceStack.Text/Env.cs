@@ -1,7 +1,7 @@
 
 using System;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public static class Env
 	{

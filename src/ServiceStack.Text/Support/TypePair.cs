@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -12,7 +12,7 @@
 
 using System;
 
-namespace ServiceStack.Text.Support
+namespace StrobelStack.Text.Support
 {
 	public class TypePair
 	{

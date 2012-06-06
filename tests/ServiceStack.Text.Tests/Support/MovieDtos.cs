@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using ServiceStack.Common.Extensions;
 using ServiceStack.DataAnnotations;
 
-namespace ServiceStack.Text.Tests.Support
+namespace StrobelStack.Text.Tests.Support
 {
 	public static class MoviesData
 	{

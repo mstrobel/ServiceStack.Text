@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	internal class TypeConfig
 	{

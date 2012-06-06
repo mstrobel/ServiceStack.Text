@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Jsv;
 
-namespace ServiceStack.Text.Tests.JsvTests
+namespace StrobelStack.Text.Tests.JsvTests
 {
     [TestFixture]
     public class JsvDeserializeTypeTests

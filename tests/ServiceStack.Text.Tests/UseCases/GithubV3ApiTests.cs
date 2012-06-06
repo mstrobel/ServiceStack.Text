@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests.UseCases
+namespace StrobelStack.Text.Tests.UseCases
 {
 	/// <summary>
 	/// Stand-alone C# client for the Github v3 API
-	/// Uses only ServiceStack.Text (+NUnit for tests)
+	/// Uses only StrobelStack.Text (+NUnit for tests)
 	/// </summary>
 	[TestFixture]
 	public class GithubV3ApiGatewayTests
@@ -19,9 +19,9 @@ namespace ServiceStack.Text.Tests.UseCases
 
 			Console.WriteLine("\n-- GetUserRepos(mythz): \n" + client.GetUserRepos("mythz").Dump());
 			Console.WriteLine("\n-- GetOrgRepos(ServiceStack): \n" + client.GetOrgRepos("ServiceStack").Dump());
-			Console.WriteLine("\n-- GetUserRepo(ServiceStack,ServiceStack.Text): \n" + client.GetUserRepo("mythz", "jquip").Dump());
-			Console.WriteLine("\n-- GetUserRepoContributors(ServiceStack,ServiceStack.Text): \n" + client.GetUserRepoContributors("ServiceStack", "ServiceStack.Text").Dump());
-			Console.WriteLine("\n-- GetUserRepoWatchers(ServiceStack,ServiceStack.Text): \n" + client.GetUserRepoWatchers("ServiceStack", "ServiceStack.Text").Dump());
+			Console.WriteLine("\n-- GetUserRepo(ServiceStack,StrobelStack.Text): \n" + client.GetUserRepo("mythz", "jquip").Dump());
+			Console.WriteLine("\n-- GetUserRepoContributors(ServiceStack,StrobelStack.Text): \n" + client.GetUserRepoContributors("ServiceStack", "ServiceStack.Text").Dump());
+			Console.WriteLine("\n-- GetUserRepoWatchers(ServiceStack,StrobelStack.Text): \n" + client.GetUserRepoWatchers("ServiceStack", "ServiceStack.Text").Dump());
 			Console.WriteLine("\n-- GetReposUserIsWatching(mythz): \n" + client.GetReposUserIsWatching("mythz").Dump());
 			Console.WriteLine("\n-- GetUserOrgs(mythz): \n" + client.GetUserOrgs("mythz").Dump());
 			Console.WriteLine("\n-- GetUserFollowers(mythz): \n" + client.GetUserFollowers("mythz").Dump());

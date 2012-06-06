@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class CultureInfoTests

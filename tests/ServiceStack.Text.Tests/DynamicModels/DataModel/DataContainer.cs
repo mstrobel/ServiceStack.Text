@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ServiceStack.Text.Tests.DynamicModels.DataModel
+namespace StrobelStack.Text.Tests.DynamicModels.DataModel
 {
 	[Serializable]
 	public sealed class DataContainer : DataContainerBase

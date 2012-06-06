@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -17,7 +17,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal static class WriteListsOfElements<TSerializer>
 		where TSerializer : ITypeSerializer
@@ -195,7 +195,7 @@ namespace ServiceStack.Text.Common
 	internal static class WriteListsOfElements<T, TSerializer>
 		where TSerializer : ITypeSerializer
 	{
-		private static readonly WriteObjectDelegate ElementWriteFn;
+		private static readonly WriteValueDelegate<T> ElementWriteFn;
 
 		static WriteListsOfElements()
 		{

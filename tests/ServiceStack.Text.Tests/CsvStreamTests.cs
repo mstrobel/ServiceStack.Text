@@ -2,7 +2,7 @@ using System;
 using Northwind.Common.DataModel;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class CsvStreamTests

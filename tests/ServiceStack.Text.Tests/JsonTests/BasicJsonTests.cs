@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using NUnit.Framework;
 using ServiceStack.Common.Tests.Models;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	[TestFixture]
 	public class BasicJsonTests

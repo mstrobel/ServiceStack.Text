@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using ServiceStack.ServiceInterface.ServiceModel;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class ReportedIssues
@@ -257,7 +257,7 @@ namespace ServiceStack.Text.Tests
         [Test]
         public void Deserialize_Correctly_When_Last_Item_Is_Null_in_array()
         {
-            var arrayOfInt = new int?[2] {1, null };
+            var arrayOfInt = new int?[2] {null, null };
             var serialized = TypeSerializer.SerializeToString(arrayOfInt);
             Console.WriteLine(serialized);
             var deserialized = TypeSerializer.DeserializeFromString<int?[]>(serialized);

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using ServiceStack.Text.Tests.Support;
+using StrobelStack.Text.Tests.Support;
 
-namespace ServiceStack.Text.Tests.CsvTests
+namespace StrobelStack.Text.Tests.CsvTests
 {
 	[TestFixture]
 	public class CustomHeaderTests

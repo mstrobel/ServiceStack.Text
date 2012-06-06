@@ -7,9 +7,9 @@ using System.Runtime.Serialization;
 using System.Threading;
 using NUnit.Framework;
 using ServiceStack.Common.Extensions;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Jsv;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class AdhocModelTests
@@ -528,8 +528,8 @@ namespace ServiceStack.Text.Tests
 				Data = new object[] { 5, null, "text" }
 			};
 
-			ServiceStack.Text.JsConfig.IncludeNullValues = true;
-			var json = ServiceStack.Text.JsonSerializer.SerializeToString(t);
+			StrobelStack.Text.JsConfig.IncludeNullValues = true;
+			var json = StrobelStack.Text.JsonSerializer.SerializeToString(t);
 			Assert.That(json, Is.EqualTo("{\"Name\":\"MyName\",\"Number\":null,\"Data\":[5,null,\"text\"]}"));
 			JsConfig.Reset();
 		}

@@ -1,6 +1,6 @@
 using System;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public interface ITracer
 	{

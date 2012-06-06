@@ -1,8 +1,8 @@
 using System;
 using NUnit.Framework;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text.Tests.Utils
+namespace StrobelStack.Text.Tests.Utils
 {
 	[TestFixture]
 	public class DateTimeSerializerTests

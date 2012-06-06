@@ -1,6 +1,6 @@
 using System;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
 	internal static class JsState
 	{
@@ -10,5 +10,7 @@ namespace ServiceStack.Text.Common
 		[ThreadStatic] internal static bool IsWritingValue = false;
 
 		[ThreadStatic] internal static bool IsWritingDynamic = false;
+
+		[ThreadStatic] internal static bool IsJson = false;
 	}
 }

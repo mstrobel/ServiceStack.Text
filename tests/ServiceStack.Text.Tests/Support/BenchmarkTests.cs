@@ -5,9 +5,9 @@ using System.Text;
 using NUnit.Framework;
 using ServiceStack.Common.Extensions;
 using ServiceStack.Common.Tests;
-using ServiceStack.Text.Tests.JsonTests;
+using StrobelStack.Text.Tests.JsonTests;
 
-namespace ServiceStack.Text.Tests.Support
+namespace StrobelStack.Text.Tests.Support
 {
 	[Ignore]
 	[TestFixture]

@@ -2,9 +2,9 @@ using System;
 using System.Runtime.Serialization;
 using Northwind.Common.DataModel;
 using NUnit.Framework;
-using ServiceStack.Text.Tests.Support;
+using StrobelStack.Text.Tests.Support;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class DataStressTests

@@ -5,11 +5,11 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Jsv;
-using ServiceStack.Text.Reflection;
+using StrobelStack.Text.Common;
+using StrobelStack.Text.Jsv;
+using StrobelStack.Text.Reflection;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
 	public class CsvSerializer
 	{

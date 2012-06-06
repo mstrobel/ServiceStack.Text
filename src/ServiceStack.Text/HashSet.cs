@@ -1,6 +1,6 @@
 ﻿//
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -16,7 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ServiceStack.Text.WP
+namespace StrobelStack.Text.WP
 {
     ///<summary>
     /// A hashset implementation that uses an IDictionary

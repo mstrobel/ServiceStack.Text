@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using ServiceStack.Text.Tests.DynamicModels.DataModel;
+using StrobelStack.Text.Tests.DynamicModels.DataModel;
 
-namespace ServiceStack.Text.Tests.DynamicModels
+namespace StrobelStack.Text.Tests.DynamicModels
 {
 	[TestFixture]
 	public class ComplexObjectGraphTest

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using ServiceStack.Common.Tests.Models;
 
-namespace ServiceStack.Text.Tests.Utils
+namespace StrobelStack.Text.Tests.Utils
 {
 	[TestFixture]
 	public class JsvFormatterTests

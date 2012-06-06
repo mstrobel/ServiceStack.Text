@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -15,15 +15,15 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using ServiceStack.Text.Support;
+using StrobelStack.Text.Support;
 using System.Collections.Generic;
 #if WINDOWS_PHONE
 using System.IO.IsolatedStorage;
-using ServiceStack.Text.WP;
+using StrobelStack.Text.WP;
 
 #endif
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
     public static class StringExtensions
     {

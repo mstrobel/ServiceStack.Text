@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using NUnit.Framework;
-using ServiceStack.Text.Tests.Support;
+using StrobelStack.Text.Tests.Support;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class DataContractTests
@@ -147,7 +147,7 @@ namespace ServiceStack.Text.Tests
 			public string Name { get; set; }
 		}
 
-		[Test] //https://github.com/ServiceStack/ServiceStack.Text/issues/46
+		[Test] //https://github.com/ServiceStack/StrobelStack.Text/issues/46
 		public void Replicate_serialization_bug()
 		{
 			var p = new PersonRecord { Id = 27, Name = "John" };

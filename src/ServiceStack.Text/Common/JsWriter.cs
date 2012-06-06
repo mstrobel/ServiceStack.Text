@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 
-using ServiceStack.Text.Json;
-using ServiceStack.Text.Jsv;
+using StrobelStack.Text.Json;
+using StrobelStack.Text.Jsv;
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
     public static class JsWriter
     {
@@ -139,9 +140,7 @@ namespace ServiceStack.Text.Common
         {
 			if (type == typeof(char) || type == typeof(char?))
 				return Serializer.WriteChar;
-			if (type == typeof(int) || type == typeof(int?))
-				return Serializer.WriteInt32;
-			if (type == typeof(long) || type == typeof(long?))
+		if (type == typeof(long) || type == typeof(long?))
 				return Serializer.WriteInt64;
 			if (type == typeof(ulong) || type == typeof(ulong?))
 				return Serializer.WriteUInt64;
@@ -200,6 +199,7 @@ namespace ServiceStack.Text.Common
             return Serializer.WriteObjectString;
         }
 
+/*
         internal WriteObjectDelegate GetWriteFn<T>()
         {
             if (typeof(T) == typeof(string))
@@ -297,7 +297,33 @@ namespace ServiceStack.Text.Common
 
             return Serializer.WriteBuiltIn;
         }
+*/
 
+        internal WriteValueDelegate<T> GetWriteFn<T>()
+        {
+//            if (typeof(T).IsClass)
+//                return WriteType<T, TSerializer>.GetWriter();
+
+            if (typeof(T).IsValueType && !JsConfig.TreatAsRefType(typeof(T)) && JsConfig<T>.SerializeFn != null)
+            {
+                var serializer = JsConfig<T>.SerializeFn;
+                return (w, v) => GetWriteFn<string>()(w, serializer(v));
+            }
+
+            var specialFunction = GetSpecialWriteFn(typeof(T));
+            if (specialFunction != null)
+                return (w, v) => specialFunction(w, v);
+
+            var writer = Expression.Parameter(typeof(TextWriter));
+            var value = Expression.Parameter(typeof(T));
+
+            var lambda = Expression.Lambda<WriteValueDelegate<T>>(
+                SerializationExpressions.BuildSerializeExpression(writer, value),
+                writer,
+                value);
+
+            return lambda.Compile();
+        }
 
         public Dictionary<Type, WriteObjectDelegate> SpecialTypes;
 

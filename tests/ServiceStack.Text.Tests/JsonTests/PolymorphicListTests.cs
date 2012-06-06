@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using ServiceStack.Text.Common;
+using StrobelStack.Text.Common;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	public interface ICat
 	{
@@ -107,14 +107,12 @@ namespace ServiceStack.Text.Tests.JsonTests
 
 			Log(asText);
 
-			Assert.That(
+		    var expected = "{\"Animals\":[{\"__type\":\"" + typeof(Dog).ToTypeString() + "\",\"Name\":\"Fido\",\"DogBark\":\"woof\"},{\"__type\":\"" + typeof(Cat).ToTypeString() + "\",\"Name\":\"Tigger\",\"CatMeow\":\"meow\"}],\"Name\":\"City Zoo\"}";
+
+		    Assert.That(
 				asText,
 				Is.EqualTo(
-					"{\"Animals\":[{\"__type\":\""
-					+ typeof(Dog).ToTypeString()
-					+ "\",\"Name\":\"Fido\",\"DogBark\":\"woof\"},{\"__type\":\""
-					+ typeof(Cat).ToTypeString()
-					+ "\",\"Name\":\"Tigger\",\"CatMeow\":\"meow\"}],\"Name\":\"City Zoo\"}"));
+					expected));
 		}
 
 		[Test]
@@ -175,7 +173,7 @@ namespace ServiceStack.Text.Tests.JsonTests
 			};
 
 			Assert.That(pets.ToJson(), Is.EqualTo(
-				@"{""Cat"":{""Name"":""Cat""},""Dog"":{""__type"":""ServiceStack.Text.Tests.JsonTests.Dog, ServiceStack.Text.Tests"",""Name"":""Dog""}}"));
+				@"{""Cat"":{""Name"":""Cat""},""Dog"":{""__type"":""StrobelStack.Text.Tests.JsonTests.Dog, StrobelStack.Text.Tests"",""Name"":""Dog""}}"));
 		}
 
 		public class PetDog

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 #endif
 using ServiceStack.Common.Support;
 
-namespace ServiceStack.Text
+namespace StrobelStack.Text
 {
     /// <summary>
     /// Utils to load types

@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 #if WINDOWS_PHONE
-using ServiceStack.Text.WP;
+using StrobelStack.Text.WP;
 #endif
 
-namespace ServiceStack.Text.Common
+namespace StrobelStack.Text.Common
 {
     internal static class DeserializeCollection<TSerializer>
         where TSerializer : ITypeSerializer

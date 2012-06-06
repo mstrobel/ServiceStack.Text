@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace ServiceStack.Text.Tests.DynamicModels.DataModel
+namespace StrobelStack.Text.Tests.DynamicModels.DataModel
 {
 	public class CustomException
 		: Exception

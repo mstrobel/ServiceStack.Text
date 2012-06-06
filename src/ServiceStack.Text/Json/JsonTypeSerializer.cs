@@ -1,6 +1,6 @@
 //
 // http://code.google.com/p/servicestack/wiki/TypeSerializer
-// ServiceStack.Text: .NET C# POCO Type Text Serializer.
+// StrobelStack.Text: .NET C# POCO Type Text Serializer.
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
@@ -11,12 +11,15 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using ServiceStack.Text.Common;
+using System.Threading;
 
-namespace ServiceStack.Text.Json
+using StrobelStack.Text.Common;
+
+namespace StrobelStack.Text.Json
 {
 	internal class JsonTypeSerializer
 		: ITypeSerializer
@@ -35,7 +38,7 @@ namespace ServiceStack.Text.Json
 			WhiteSpaceFlags[(int)'\n'] = true;
 		}
 
-		public WriteObjectDelegate GetWriteFn<T>()
+        public WriteValueDelegate<T> GetWriteFn<T>()
 		{
 			return JsonWriter<T>.WriteFn();
 		}
@@ -50,7 +53,7 @@ namespace ServiceStack.Text.Json
 			return JsonWriter.GetTypeInfo(type);
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Shortcut escape when we're sure value doesn't contain any escaped chars
 		/// </summary>
 		/// <param name="writer"></param>
@@ -81,7 +84,7 @@ namespace ServiceStack.Text.Json
 			JsonUtils.WriteString(writer, value);
 		}
 
-		public void WriteBuiltIn(TextWriter writer, object value)
+		public void WriteBuiltIn<T>(TextWriter writer, T value)
 		{
 			if (JsState.WritingKeyCount > 0 && !JsState.IsWritingValue) writer.Write(JsonUtils.QuoteChar);
 
@@ -100,7 +103,7 @@ namespace ServiceStack.Text.Json
 			WriteString(writer, ((Exception)value).Message);
 		}
 
-		public void WriteDateTime(TextWriter writer, object oDateTime)
+        public void WriteDateTime(TextWriter writer, object oDateTime)
 		{
 			WriteRawString(writer, DateTimeSerializer.ToWcfJsonDate((DateTime)oDateTime));
 		}
@@ -186,12 +189,12 @@ namespace ServiceStack.Text.Json
 				writer.Write((ushort)intValue);
 		}
 
-		public void WriteInt32(TextWriter writer, object intValue)
+		public void WriteInt32(TextWriter writer, int? intValue)
 		{
-			if (intValue == null)
-				writer.Write(JsonUtils.Null);
+			if (intValue.HasValue)
+				writer.Write(intValue.Value);
 			else
-				writer.Write((int)intValue);
+                writer.Write(JsonUtils.Null);
 		}
 
 		public void WriteUInt32(TextWriter writer, object uintValue)
@@ -568,6 +571,50 @@ namespace ServiceStack.Text.Json
 			var strValue = value.Substring(tokenStartPos, i - tokenStartPos);
 			return strValue == JsonUtils.Null ? null : strValue;
 		}
+
+        public void WriteTypeInfo(TextWriter writer, object value)
+        {
+            writer.Write(TypeInfoCache.GetTypeName(value.GetType()));
+        }
+
+        private static class TypeInfoCache
+        {
+            private static Dictionary<Type, String> _cache = new Dictionary<Type, string>();
+
+            internal static string GetTypeName(Type type)
+            {
+                string name;
+
+                if (_cache.TryGetValue(type, out name))
+                    return name;
+
+                name = ConstructTypeInfoString(type);
+
+                Dictionary<Type, String> oldCache, newCache;
+
+                do
+                {
+                    oldCache = _cache;
+                    newCache = new Dictionary<Type, string>(oldCache);
+                    newCache[type] = name;
+
+                } while (!ReferenceEquals(Interlocked.CompareExchange(ref _cache, newCache, oldCache), oldCache));
+
+                return name;
+            }
+
+            private static string ConstructTypeInfoString(Type type)
+            {
+                return JsWriter.QuoteString +
+                       JsWriter.TypeAttr +
+                       JsWriter.QuoteString +
+                       JsWriter.MapKeySeperator +
+                       JsWriter.QuoteString +
+                       type.ToTypeString() +
+                       JsWriter.QuoteString;
+            }
+
+        }
 	}
 
 }

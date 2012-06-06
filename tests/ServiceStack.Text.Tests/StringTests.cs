@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using ServiceStack.Client;
-using ServiceStack.Text.Tests.Support;
+using StrobelStack.Text.Tests.Support;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	[TestFixture]
 	public class StringTests
@@ -65,12 +65,12 @@ namespace ServiceStack.Text.Tests
 
 			//var bclString = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<string>(json);
 			var bclString = BclJsonDataContractDeserializer.Instance.Parse<string>(json);
-			var ssString = ServiceStack.Text.JsonSerializer.DeserializeFromString<string>(json);
+			var ssString = StrobelStack.Text.JsonSerializer.DeserializeFromString<string>(json);
 
 			Assert.AreEqual(correctString, bclString, "BCL deserializes correctly");
 			Assert.AreEqual(correctString, ssString, "Service Stack deserializes correctly");
 
-			var ssJson = ServiceStack.Text.JsonSerializer.SerializeToString(ssString, typeof(string));
+			var ssJson = StrobelStack.Text.JsonSerializer.SerializeToString(ssString, typeof(string));
 			//var bclJson = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(bclString);
 			var bclJson = BclJsonDataContractSerializer.Instance.Parse(bclString);
 

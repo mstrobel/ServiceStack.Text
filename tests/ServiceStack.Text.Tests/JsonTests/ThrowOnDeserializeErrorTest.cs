@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using NUnit.Framework;
-using ServiceStack.Text.Tests.Support;
+using StrobelStack.Text.Tests.Support;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	[TestFixture]
 	public class ThrowOnDeserializeErrorTest

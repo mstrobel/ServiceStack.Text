@@ -5,7 +5,7 @@ using NUnit.Framework;
 using ServiceStack.Common.Extensions;
 using ServiceStack.Common.Tests.Models;
 
-namespace ServiceStack.Text.Tests.JsonTests
+namespace StrobelStack.Text.Tests.JsonTests
 {
 	[TestFixture]
 	public class EscapedCharsTests

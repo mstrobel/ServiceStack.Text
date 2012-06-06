@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ServiceStack.Text")]
+[assembly: AssemblyTitle("StrobelStack.Text")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("ServiceStack.Text")]
+[assembly: AssemblyProduct("StrobelStack.Text")]
 [assembly: AssemblyCopyright("Copyright © ServiceStack 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

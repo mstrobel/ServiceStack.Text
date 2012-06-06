@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace ServiceStack.Text.Tests.DynamicModels.DataModel
+namespace StrobelStack.Text.Tests.DynamicModels.DataModel
 {
 	[Serializable]
 	public class ObjectGraph : ISerializable

@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using NUnit.Framework;
 
-namespace ServiceStack.Text.Tests
+namespace StrobelStack.Text.Tests
 {
 	public class Module
 	{
